@@ -1,0 +1,186 @@
+{
+    "packages": {
+
+        "Termux System": [
+            "coreutils",
+            "curl",
+            "wget",
+            "tar",
+            "zip",
+            "unzip",
+            "tree",
+            "htop"
+        ],
+
+        "C C++ Development": [
+            "clang",
+            "cmake",
+            "make",
+            "ninja",
+            "gdb"
+        ],
+
+        "Python Development": [
+            "python",
+            "python-pip"
+        ],
+
+        "Node Development": [
+            "nodejs",
+            "npm"
+        ],
+
+        "Rust Development": [
+            "rust",
+            "cargo"
+        ],
+
+        "Java Development": [
+            "openjdk",
+            "gradle"
+        ],
+
+        "Editors": [
+            "nano",
+            "vim",
+            "neovim",
+            "yazi"
+        ],
+
+        "Networking": [
+            "openssh",
+            "nmap",
+            "q-dns-client"
+        ],
+
+        "X11 Desktop": [
+            "xorg-server",
+            "tigervnc",
+            "termux-x11-nightly"
+        ]
+
+    },
+
+
+    "python_packages": {
+
+        "Web Development": [
+            "flask",
+            "django",
+            "fastapi",
+            "requests",
+            "beautifulsoup4"
+        ],
+
+        "AI Machine Learning": [
+            "numpy",
+            "pandas",
+            "scikit-learn",
+            "transformers"
+        ],
+
+        "Automation": [
+            "selenium",
+            "rich",
+            "pyyaml"
+        ],
+
+        "Build Tools": [
+            "buildozer",
+            "cython",
+            "wheel",
+            "setuptools"
+        ],
+
+        "Image Processing": [
+            "pillow",
+            "opencv-python"
+        ]
+
+    },
+
+
+    "profiles": {
+
+        "Python Developer": {
+
+            "termux": [
+                "python",
+                "git",
+                "clang"
+            ],
+
+            "pip": [
+                "requests",
+                "flask",
+                "numpy"
+            ]
+
+        },
+
+
+        "C C++ Developer": {
+
+            "termux": [
+                "clang",
+                "cmake",
+                "make",
+                "gdb"
+            ],
+
+            "pip": []
+
+        },
+
+
+        "AI Developer": {
+
+            "termux": [
+                "python",
+                "git",
+                "clang"
+            ],
+
+            "pip": [
+                "numpy",
+                "pandas",
+                "scikit-learn",
+                "transformers"
+            ]
+
+        },
+
+
+        "Web Developer": {
+
+            "termux": [
+                "nodejs",
+                "git",
+                "python"
+            ],
+
+            "pip": [
+                "flask",
+                "fastapi"
+            ]
+
+        },
+
+
+        "Android Developer": {
+
+            "termux": [
+                "git",
+                "openjdk",
+                "python"
+            ],
+
+            "pip": [
+                "buildozer",
+                "cython"
+            ]
+
+        }
+
+    }
+}
