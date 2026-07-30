@@ -1,0 +1,35 @@
+{
+    "Web Development": [
+        "flask",
+        "django",
+        "fastapi",
+        "requests",
+        "beautifulsoup4"
+    ],
+
+    "AI & Machine Learning": [
+        "numpy",
+        "pandas",
+        "scikit-learn",
+        "torch",
+        "transformers"
+    ],
+
+    "Automation": [
+        "selenium",
+        "pyautogui",
+        "rich"
+    ],
+
+    "Build Tools": [
+        "buildozer",
+        "cython",
+        "setuptools",
+        "wheel"
+    ],
+
+    "Image Processing": [
+        "pillow",
+        "opencv-python"
+    ]
+}
