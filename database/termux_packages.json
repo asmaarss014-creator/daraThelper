@@ -1,0 +1,39 @@
+{
+    "System": [
+        "coreutils",
+        "curl",
+        "wget",
+        "tar",
+        "zip",
+        "unzip",
+        "tree",
+        "htop"
+    ],
+
+    "Development": [
+        "git",
+        "clang",
+        "cmake",
+        "make",
+        "ninja"
+    ],
+
+    "Editors": [
+        "nano",
+        "vim",
+        "neovim",
+        "yazi"
+    ],
+
+    "Networking": [
+        "openssh",
+        "nmap",
+        "q-dns-client"
+    ],
+
+    "X11": [
+        "xorg-server",
+        "tigervnc",
+        "termux-x11-nightly"
+    ]
+}
