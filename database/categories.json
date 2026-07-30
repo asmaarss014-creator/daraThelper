@@ -1,0 +1,44 @@
+{
+    "System": [
+        "coreutils",
+        "curl",
+        "wget",
+        "tar",
+        "zip",
+        "unzip",
+        "tree",
+        "htop"
+    ],
+
+    "Development": [
+        "git",
+        "clang",
+        "cmake",
+        "make",
+        "ninja",
+        "python",
+        "nodejs"
+    ],
+
+    "Networking": [
+        "openssh",
+        "nmap",
+        "dnsutils"
+    ],
+
+    "Security": [
+        "openssl",
+        "gnupg"
+    ],
+
+    "AI": [
+        "python",
+        "tesseract",
+        "ffmpeg"
+    ],
+
+    "Android": [
+        "adb",
+        "fastboot"
+    ]
+}
