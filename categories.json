@@ -1,0 +1,94 @@
+{
+    "System": [
+        "coreutils",
+        "curl",
+        "wget",
+        "tar",
+        "zip",
+        "unzip",
+        "tree",
+        "htop",
+        "tmux"
+    ],
+
+    "Development": [
+        "python",
+        "git",
+        "clang",
+        "cmake",
+        "make",
+        "ninja",
+        "nodejs",
+        "golang",
+        "rust"
+    ],
+
+    "Editors": [
+        "nano",
+        "vim",
+        "neovim",
+        "micro",
+        "yazi"
+    ],
+
+    "Networking": [
+        "openssh",
+        "nmap",
+        "dnsutils",
+        "netcat-openbsd",
+        "q-dns-client"
+    ],
+
+    "Security": [
+        "openssl",
+        "gnupg",
+        "hashcat",
+        "john",
+        "sqlmap"
+    ],
+
+    "AI": [
+        "python",
+        "tesseract",
+        "ffmpeg",
+        "imagemagick"
+    ],
+
+    "Databases": [
+        "sqlite",
+        "mariadb",
+        "postgresql",
+        "redis"
+    ],
+
+    "Android": [
+        "adb",
+        "fastboot",
+        "apksigner",
+        "zipalign"
+    ],
+
+    "Multimedia": [
+        "ffmpeg",
+        "sox",
+        "imagemagick",
+        "mediainfo"
+    ],
+
+    "Cloud": [
+        "rclone",
+        "rsync"
+    ],
+
+    "Web": [
+        "nginx",
+        "php",
+        "nodejs"
+    ],
+
+    "X11": [
+        "xorg-server",
+        "tigervnc",
+        "termux-x11-nightly"
+    ]
+}
