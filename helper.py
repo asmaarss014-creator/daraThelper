@@ -1,64 +1,153 @@
-#!/usr/bin/env python3
-
 import os
-import sys
-import time
-
-from modules.system_check import SystemChecker
-from modules.menu import MainMenu
+import json
+import subprocess
+import urllib.request
 
 
-VERSION = "1.0.0"
+# Database files
+DATA_FILES = [
+    "data1.txt",
+    "data2.txt"
+]
+
+DATABASE_URLS = {
+    "data1.txt": "",
+    "data2.txt": "",
+    "categories.json": ""
+}
 
 
-def clear():
-    os.system("clear")
+def load_packages():
+    """
+    Load packages from data1.txt and data2.txt
+    """
+
+    packages = []
+
+    for file in DATA_FILES:
+
+        if os.path.exists(file):
+
+            with open(file, "r", encoding="utf-8") as f:
+
+                for line in f:
+
+                    package = line.strip()
+
+                    # Ignore empty lines and comments
+                    if package and not package.startswith("#"):
+                        packages.append(package)
 
 
-def banner():
-    print("""
-==============================================
-        TERMUX DEVELOPER HELPER
-              Version {}
-==============================================
-""".format(VERSION))
+    # Remove duplicates
+    return sorted(set(packages))
 
 
-def loading():
-    steps = [
-        "Checking Python",
-        "Detecting Android",
-        "Checking Termux",
-        "Checking Storage",
-        "Checking Architecture",
-        "Loading Modules"
+
+def load_categories():
+
+    """
+    Load category database
+    """
+
+    if not os.path.exists("categories.json"):
+
+        return {}
+
+
+    with open(
+        "categories.json",
+        "r",
+        encoding="utf-8"
+    ) as f:
+
+        return json.load(f)
+
+
+
+def install_package(package):
+
+    """
+    Install Termux package
+    """
+
+    print(
+        f"\nInstalling {package}...\n"
+    )
+
+
+    subprocess.run(
+        [
+            "pkg",
+            "install",
+            package,
+            "-y"
+        ]
+    )
+
+
+    print(
+        f"\n{package} installation finished."
+    )
+
+
+
+def search_package(text):
+
+    """
+    Search packages
+    """
+
+    packages = load_packages()
+
+
+    return [
+        package
+        for package in packages
+        if text.lower() in package.lower()
     ]
 
-    for step in steps:
-        print("✓ " + step)
-        time.sleep(0.3)
-
-    print("\nSystem Ready.\n")
 
 
-def main():
+def update_database():
 
-    clear()
-    banner()
+    """
+    Update database files from online source
+    """
 
-    loading()
-
-    checker = SystemChecker()
-    checker.run()
-
-    menu = MainMenu()
-    menu.start()
+    print("\nChecking for updates...")
 
 
-if __name__ == "__main__":
-    try:
-        main()
+    for filename, url in DATABASE_URLS.items():
 
-    except KeyboardInterrupt:
-        print("\n\nInstallation cancelled by user.")
-        sys.exit(0)
+        if url:
+
+            try:
+
+                urllib.request.urlretrieve(
+                    url,
+                    filename
+                )
+
+                print(
+                    f"{filename} updated"
+                )
+
+
+            except Exception as e:
+
+                print(
+                    f"Update failed: {e}"
+                )
+
+
+        else:
+
+            print(
+                f"No online link set for {filename}"
+            )
+
+
+    print(
+        "\nDatabase update complete."
+    )
