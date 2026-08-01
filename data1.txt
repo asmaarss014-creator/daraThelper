@@ -1,73 +1,312 @@
-coreutils
-curl
-wget
-tar
-zip
-unzip
-tree
-htop
-tmux
-git
-gh
-python
-python-pip
-clang
-llvm
-cmake
-make
-ninja
-gdb
-pkg-config
-nodejs
-npm
-golang
-rust
-cargo
-openjdk-21
-php
-ruby
-perl
-lua
-nano
-vim
-neovim
-micro
-emacs
-yazi
-openssh
-nmap
-dnsutils
-net-tools
-netcat-openbsd
-tcpdump
-whois
-openssl
-gnupg
-jq
-yq
-ripgrep
-fzf
-fd
-bat
-sqlite
-mariadb
-postgresql
-redis
-nginx
-apache2
-ffmpeg
-sox
-imagemagick
-tesseract
-mediainfo
-rclone
-rsync
-proot
-proot-distro
-adb
-fastboot
-apksigner
-zipalign
-xorg-server
-tigervnc
-termux-x11-nightly
+=======================================================================
+TERMUX MASTER COMMAND LIST
+=======================================================================
+
+1. TERMUX-SPECIFIC COMMANDS & APIs (Requires `pkg install termux-api`)
+-----------------------------------------------------------------------
+termux-setup-storage               # Grant Termux access to device storage
+termux-change-repo                 # Change the mirror/repository for packages
+termux-reload-settings             # Reload Termux configuration after editing prefs
+termux-wake-lock                   # Force Termux to stay awake in background
+termux-wake-unlock                 # Release the wake lock
+termux-open <file>                 # Open a file with the system default app
+termux-open-url <url>              # Open a URL in the system default browser
+termux-clipboard-get               # Get text from the system clipboard
+termux-clipboard-set <text>        # Set text to the system clipboard
+termux-toast <text>                # Show a short toast message on screen
+termux-notification                # Show a system notification
+termux-vibrate                     # Vibrate the device
+termux-vibrate -d 1000             # Vibrate the device for 1000ms
+termux-tts-speak <text>            # Speak the provided text using TTS
+termux-battery-status              # Get current battery status and level
+termux-brightness 255              # Set device screen brightness to max
+termux-volume music 10             # Set media volume to level 10
+termux-location                    # Get current GPS location
+termux-location -p gps             # Get location using GPS provider
+termux-sms-send -n <number> <msg>  # Send an SMS to a specific number
+termux-call <number>               # Initiate a phone call
+termux-telephony-deviceinfo        # Get telephony device info (IMEI, etc.)
+termux-wifi-connectioninfo         # Get current WiFi connection info
+termux-wifi-scaninfo               # Get info about nearby WiFi networks
+termux-camera-photo out.jpg        # Take a photo and save as out.jpg
+termux-media-scan <path>           # Trigger Android media scanner on a path
+termux-microphone-record out.wav   # Record audio from microphone to file
+termux-ssh                         # Start the SSH server (requires openssh)
+
+2. PACKAGE MANAGEMENT (pkg & apt)
+-----------------------------------------------------------------------
+pkg update                         # Update the list of available packages
+pkg upgrade                        # Upgrade all installed packages
+pkg install <package>              # Install a specific package
+pkg uninstall <package>            # Uninstall a package
+pkg search <package>               # Search for a package in the repo
+pkg show <package>                 # Show detailed info about a package
+pkg list-installed                 # List all installed packages
+pkg list-all                       # List all available packages
+pkg autoremove                     # Remove orphaned dependencies
+pkg clean                          # Clear cached package files
+apt update                         # Advanced Packaging Tool update
+apt upgrade                        # APT upgrade
+apt install <package>              # APT install
+apt remove <package>               # APT remove
+apt purge <package>                # APT remove including config files
+apt autoremove                     # APT autoremove
+apt-cache search <package>         # Search APT cache
+apt-cache show <package>           # Show APT cache info
+apt-cache policy <package>         # Show package priorities
+pip install <package>              # Install Python package
+pip uninstall <package>            # Uninstall Python package
+pip list                           # List installed Python packages
+pip freeze                         # Output installed packages in requirements format
+gem install <package>              # Install Ruby package
+npm install <package>              # Install NodeJS package
+composer require <package>         # Install PHP package
+
+3. FILE & DIRECTORY MANAGEMENT
+-----------------------------------------------------------------------
+pwd                                # Print current working directory
+ls                                 # List files and directories
+ls -l                              # List with detailed info (permissions, size)
+ls -a                              # List including hidden files
+ls -la                             # List detailed + hidden files
+ls -lh                             # List with human-readable file sizes
+ls -R                              # List recursively
+cd <dir>                           # Change directory
+cd ..                              # Go up one directory
+cd ~                               # Go to home directory
+cd -                               # Go to previous directory
+mkdir <dir>                        # Make a new directory
+mkdir -p <dir/subdir>              # Make parent directories if they don't exist
+touch <file>                       # Create an empty file
+touch file1 file2 file3            # Create multiple empty files
+rm <file>                          # Remove a file
+rm -r <dir>                        # Remove a directory and its contents
+rm -rf <dir>                       # Force remove directory without prompt
+cp <file> <dest>                   # Copy file to destination
+cp -r <dir> <dest>                 # Copy directory recursively
+cp -i <file> <dest>                # Copy interactively (prompt before overwrite)
+mv <file> <dest>                   # Move or rename a file
+mv -i <file> <dest>                # Move interactively
+ln -s <target> <linkname>          # Create a symbolic link
+find . -name "<file>"              # Find a file in current and subdirectories
+find / -name "<file>" 2>/dev/null  # Find file system-wide ignoring errors
+find . -type d -name "<dir>"       # Find only directories
+find . -type f -size +10M          # Find files larger than 10MB
+find . -mtime -1                   # Find files modified in last 24 hours
+tree                               # Display directories as a tree (requires install)
+stat <file>                        # Display file or file system status
+file <file>                        # Determine file type
+du -sh <dir>                       # Show directory size in human-readable format
+df -h                              # Show disk space usage
+wc <file>                          # Count lines, words, and characters
+wc -l <file>                       # Count lines only
+
+4. FILE VIEWING & TEXT EDITING
+-----------------------------------------------------------------------
+cat <file>                         # View file contents
+cat > <file>                       # Create file and type contents (Ctrl+D to save)
+cat file1 file2 > file3            # Concatenate files into a new file
+less <file>                        # View file with scroll capability (q to quit)
+more <file>                        # View file page by page
+head <file>                        # View first 10 lines of file
+head -n 20 <file>                  # View first 20 lines
+tail <file>                        # View last 10 lines
+tail -n 20 <file>                  # View last 20 lines
+tail -f <file>                     # Follow file output in real-time (logs)
+nano <file>                        # Edit file with Nano editor (Ctrl+X to exit)
+vim <file>                         # Edit file with Vim editor
+vi <file>                          # Edit file with Vi editor
+echo "text"                        # Print text to screen
+echo "text" > <file>               # Write text to file (overwrites)
+echo "text" >> <file>              # Append text to file
+sort <file>                        # Sort lines in a file
+uniq <file>                        # Remove duplicate lines
+cut -d',' -f1 <file>               # Extract first field from CSV
+paste file1 file2                  # Merge files line by line
+diff file1 file2                   # Compare files line by line
+grep "text" <file>                 # Search for text in a file
+grep -i "text" <file>              # Search case-insensitive
+grep -r "text" <dir>               # Search recursively in a directory
+grep -n "text" <file>              # Search and show line numbers
+grep -v "text" <file>              # Invert match (show lines WITHOUT text)
+sed 's/old/new/g' <file>           # Replace 'old' with 'new' in file
+awk '{print $1}' <file>            # Print first column of a file
+
+5. SYSTEM INFORMATION & PROCESSES
+-----------------------------------------------------------------------
+whoami                             # Show current user
+id                                 # Show user and group IDs
+date                               # Show current date and time
+uptime                             # Show system uptime
+top                                # Show active processes (q to quit)
+htop                               # Interactive process viewer (requires install)
+ps                                 # Show current shell processes
+ps aux                             # Show all running processes
+kill <pid>                         # Kill process by Process ID
+kill -9 <pid>                      # Force kill process
+killall <process_name>             # Kill all processes by name
+pkill <process_name>               # Kill process by name
+bg                                 # Resume suspended job in background
+fg                                 # Bring background job to foreground
+jobs                               # List active jobs
+nohup <command> &                  # Run command immune to hangups
+free -h                            # Show RAM and Swap usage
+uname -a                           # Show all system info
+uname -r                           # Show kernel release
+arch                               # Show system architecture
+env                                # Show all environment variables
+printenv                           # Print environment variables
+export VAR="value"                 # Set an environment variable
+history                            # Show command history
+history -c                         # Clear command history
+clear                              # Clear the terminal screen
+sleep 5                            # Pause terminal for 5 seconds
+time <command>                     # Measure execution time of a command
+crontab -e                         # Edit cron jobs (scheduled tasks)
+crontab -l                         # List cron jobs
+
+6. NETWORKING & CONNECTIVITY
+-----------------------------------------------------------------------
+ping <ip_or_domain>                # Check connectivity to a host
+ping -c 4 <domain>                 # Ping exactly 4 times
+ifconfig                           # Show network interfaces (requires install)
+ip addr                            # Show IP addresses
+ip route                           # Show routing table
+netstat                            # Show network connections
+netstat -tulpn                     # Show listening ports and processes
+ss -tulpn                          # Modern alternative to netstat
+curl <url>                         # Fetch content from a URL
+curl -O <url>                      # Download file from URL
+curl -I <url>                      # Get HTTP headers only
+wget <url>                         # Download file from URL
+wget -c <url>                      # Resume interrupted download
+wget -O <file> <url>               # Download and save as specific filename
+ssh user@host                      # Connect to remote server via SSH
+ssh -p <port> user@host            # Connect to specific SSH port
+scp file.txt user@host:/path/      # Copy file to remote server securely
+scp user@host:/path/file.txt .     # Copy file from remote server
+ftp <host>                         # Connect to FTP server
+nc -l -p 8080                      # Netcat listen on port 8080
+nc <ip> <port>                     # Netcat connect to IP and port
+traceroute <domain>                # Trace network path to host
+dig <domain>                       # DNS lookup
+nslookup <domain>                  # Query DNS records
+host <domain>                      # Simple DNS lookup
+nmap <ip>                          # Network scanner (requires install)
+nmap -sP <ip_range>                # Ping scan a range
+nmap -p 80,443 <ip>                # Scan specific ports
+ngrok http 8080                    # Expose local port 8080 to internet
+androidping                        # (Sometimes used) Android specific ping
+
+7. ARCHIVING & COMPRESSION
+-----------------------------------------------------------------------
+tar -cvf archive.tar <dir>         # Create a tar archive
+tar -xvf archive.tar               # Extract a tar archive
+tar -czvf archive.tar.gz <dir>     # Create a gzip compressed tar archive
+tar -xzvf archive.tar.gz           # Extract a gzip compressed tar archive
+tar -cjvf archive.tar.bz2 <dir>    # Create a bzip2 compressed tar archive
+tar -xjvf archive.tar.bz2          # Extract a bzip2 compressed tar archive
+zip archive.zip <file>             # Create a zip archive
+zip -r archive.zip <dir>           # Create a zip archive of a directory
+unzip archive.zip                  # Extract a zip archive
+unzip -l archive.zip               # List contents of zip without extracting
+gzip <file>                        # Compress a file (replaces original)
+gunzip <file.gz>                   # Decompress a .gz file
+bzip2 <file>                       # Compress using bzip2
+bunzip2 <file.bz2>                 # Decompress a .bz2 file
+xz <file>                          # Compress using xz
+unxz <file.xz>                     # Decompress a .xz file
+
+8. PERMISSIONS & OWNERSHIP
+-----------------------------------------------------------------------
+chmod +x <file>                    # Make a file executable
+chmod 755 <file>                   # Set permissions to rwxr-xr-x
+chmod 644 <file>                   # Set permissions to rw-r--r--
+chmod -R 755 <dir>                 # Change permissions recursively
+chown user:group <file>            # Change file owner and group
+chgrp group <file>                 # Change file group
+umask                              # Show default permission mask
+sudo <command>                     # Run as superuser (Not default in Termux)
+su                                 # Switch to superuser (Requires rooted phone)
+
+9. DEVELOPMENT & VERSION CONTROL (Git)
+-----------------------------------------------------------------------
+git clone <url>                    # Clone a repository
+git init                           # Initialize a new local git repo
+git status                         # Show working tree status
+git add <file>                     # Add a file to staging
+git add .                          # Add all changes to staging
+git commit -m "message"            # Commit changes with a message
+git push origin main               # Push changes to remote main branch
+git pull origin main               # Pull changes from remote main branch
+git branch                         # List local branches
+git branch <name>                  # Create a new branch
+git checkout <branch>              # Switch to a branch
+git merge <branch>                 # Merge a branch into current branch
+git log                            # Show commit history
+git remote -v                      # Show remote repositories
+python <file.py>                   # Run a Python script
+python3 <file.py>                  # Run a Python 3 script
+pip install -r requirements.txt    # Install dependencies from file
+node <file.js>                     # Run a NodeJS script
+npm start                          # Start a NodeJS application
+gcc <file.c> -o output             # Compile a C program
+g++ <file.cpp> -o output           # Compile a C++ program
+./output                           # Execute compiled binary
+make                               # Run Makefile
+cmake .                            # Generate build files
+ruby <file.rb>                     # Run a Ruby script
+php <file.php>                     # Run a PHP script
+sqlite3 <db.sqlite>                # Open SQLite database
+mysql -u user -p                   # Connect to MySQL database
+ssh-keygen                         # Generate SSH keys
+cat ~/.ssh/id_rsa.pub              # View public SSH key
+
+10. ANDROID SPECIFIC & ADVANCED CLI TOOLS
+-----------------------------------------------------------------------
+termux-info                        # Show Termux version and device info
+am start -n com.package/.Activity  # Start an Android app activity
+pm list packages                   # List all installed Android apps
+pm list packages -3                # List third-party installed apps
+pm uninstall -k --user 0 <pkg>     # Uninstall app for current user (no root)
+settings put system screen_off_timeout 60000 # Change screen timeout
+input text "hello"                 # Input text into Android UI
+input tap 100 100                  # Tap screen at X Y coordinates
+input swipe 500 1500 500 500       # Swipe screen
+screencap -p /sdcard/screen.png    # Take a screenshot via ADB shell
+screenrecord /sdcard/video.mp4     # Record screen via ADB shell
+logcat                             # View Android system logs
+logcat -c                          # Clear logcat buffer
+getprop                            # Get Android system properties
+getprop ro.build.version.release   # Get Android version
+setprop                            # Set system property (requires root)
+dd if=/dev/zero of=file bs=1M count=10 # Create 10MB dummy file
+md5sum <file>                      # Generate MD5 hash of a file
+sha1sum <file>                     # Generate SHA1 hash
+sha256sum <file>                   # Generate SHA256 hash
+base64 <file>                      # Encode file to base64
+base64 -d <file>                   # Decode base64 file
+xxd <file>                         # Hex dump of a file
+strings <file>                     # Extract printable strings from binary
+ncurses based htop                 # View processes (if htop installed)
+ranger                             # Terminal file manager (requires install)
+tmux                               # Terminal multiplexer
+tmux attach                        # Attach to a tmux session
+neofetch                           # Show system info and logo
+figlet "Hello"                     # Print ASCII art text
+toilet "Hello"                     # Print colored ASCII art text
+cowsay "Hello"                     # ASCII cow says your text
+yes "text"                         # Repeatedly print text until killed
+factor 100                         # Print prime factors of 100
+bc                                 # Command line calculator
+cal                                # Show calendar
+cal 2024                           # Show calendar for year 2024
+rev <file>                         # Reverse lines of a file
+shuf <file>                        # Randomly permute lines
+sort -R <file>                     # Sort lines randomly
+seq 1 10                           # Print numbers 1 to 10
+tput cup 0 0                       # Move cursor to row 0, col 0
+tput setaf 1                       # Set text color to red
+reset                              # Reset terminal to default state
+exit                               # Close the Termux session
+=======================================================================
