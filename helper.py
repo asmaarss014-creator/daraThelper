@@ -1,75 +1,91 @@
 import os
-import json
-import subprocess
 import urllib.request
+import subprocess
 
 
-# Database files
-DATA_FILES = [
+DATABASE_FILES = [
     "data1.txt",
     "data2.txt"
 ]
 
+
 DATABASE_URLS = {
-    "data1.txt": "",
-    "data2.txt": "",
-    "categories.json": ""
+    "data1.txt":
+    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data1.txt",
+
+    "data2.txt":
+    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data2.txt"
 }
+
 
 
 def load_packages():
     """
-    Load packages from data1.txt and data2.txt
+    Read data1.txt and data2.txt
     """
 
     packages = []
 
-    for file in DATA_FILES:
+
+    for file in DATABASE_FILES:
 
         if os.path.exists(file):
 
-            with open(file, "r", encoding="utf-8") as f:
+            with open(
+                file,
+                "r",
+                encoding="utf-8"
+            ) as f:
 
                 for line in f:
 
-                    package = line.strip()
+                    line = line.strip()
 
-                    # Ignore empty lines and comments
-                    if package and not package.startswith("#"):
-                        packages.append(package)
+                    if (
+                        line
+                        and not line.startswith("#")
+                    ):
 
-
-    # Remove duplicates
-    return sorted(set(packages))
-
+                        parts = line.split("|")
 
 
-def load_categories():
+                        if len(parts) >= 4:
 
-    """
-    Load category database
-    """
+                            packages.append({
+                                "name": parts[0],
+                                "package": parts[1],
+                                "description": parts[2],
+                                "category": parts[3]
+                            })
 
-    if not os.path.exists("categories.json"):
 
-        return {}
+    return packages
 
 
-    with open(
-        "categories.json",
-        "r",
-        encoding="utf-8"
-    ) as f:
 
-        return json.load(f)
+def search_package(text):
+
+    packages = load_packages()
+
+    results = []
+
+
+    for item in packages:
+
+        if text.lower() in (
+            item["name"].lower()
+            + item["package"].lower()
+            + item["category"].lower()
+        ):
+
+            results.append(item)
+
+
+    return results
 
 
 
 def install_package(package):
-
-    """
-    Install Termux package
-    """
 
     print(
         f"\nInstalling {package}...\n"
@@ -86,85 +102,38 @@ def install_package(package):
     )
 
 
+
+def update_database():
+
     print(
-        f"\n{package} installation finished."
+        "\nUpdating Dara Database...\n"
     )
 
 
-
-def search_package(text):
-
-    """
-    Search packages
-    """
-
-    packages = load_packages()
-
-
-    return [
-        package
-        for package in packages
-        if text.lower() in package.lower()
-    ]
-
-
-
-def update_database():
-
-    """
-    import urllib.request
-import os
-
-
-DATABASE_FILES = {
-    "data1.txt":
-    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data1.txt",
-
-    "data2.txt":
-    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data2.txt"
-}
-
-
-def update_database():
-
-    print("\n==== Updating Dara Database ====\n")
-
-    database_folder = "database"
-
-    if not os.path.exists(database_folder):
-        os.makedirs(database_folder)
-
-
-    for filename, url in DATABASE_FILES.items():
-
-        path = os.path.join(
-            database_folder,
-            filename
-        )
+    for filename, url in DATABASE_URLS.items():
 
         try:
 
-            print(
-                f"Downloading {filename}..."
-            )
-
             urllib.request.urlretrieve(
                 url,
-                path
+                filename
             )
 
             print(
-                f"{filename} updated successfully"
+                filename,
+                "updated"
             )
 
 
         except Exception as e:
 
             print(
-                f"Failed {filename}: {e}"
+                filename,
+                "failed:",
+                e
             )
 
 
     print(
-        "\nDatabase update complete."
+        "\nDatabase update finished."
     )
