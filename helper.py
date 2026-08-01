@@ -112,39 +112,56 @@ def search_package(text):
 def update_database():
 
     """
-    Update database files from online source
-    """
-
-    print("\nChecking for updates...")
+    import urllib.request
+import os
 
 
-    for filename, url in DATABASE_URLS.items():
+DATABASE_FILES = {
+    "data1.txt":
+    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data1.txt",
 
-        if url:
-
-            try:
-
-                urllib.request.urlretrieve(
-                    url,
-                    filename
-                )
-
-                print(
-                    f"{filename} updated"
-                )
+    "data2.txt":
+    "https://raw.githubusercontent.com/asmaarss014-creator/daraThelper/main/database/data2.txt"
+}
 
 
-            except Exception as e:
+def update_database():
 
-                print(
-                    f"Update failed: {e}"
-                )
+    print("\n==== Updating Dara Database ====\n")
+
+    database_folder = "database"
+
+    if not os.path.exists(database_folder):
+        os.makedirs(database_folder)
 
 
-        else:
+    for filename, url in DATABASE_FILES.items():
+
+        path = os.path.join(
+            database_folder,
+            filename
+        )
+
+        try:
 
             print(
-                f"No online link set for {filename}"
+                f"Downloading {filename}..."
+            )
+
+            urllib.request.urlretrieve(
+                url,
+                path
+            )
+
+            print(
+                f"{filename} updated successfully"
+            )
+
+
+        except Exception as e:
+
+            print(
+                f"Failed {filename}: {e}"
             )
 
 
