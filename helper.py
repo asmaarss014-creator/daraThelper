@@ -21,7 +21,9 @@ DATABASE_URLS = {
 
 def load_packages():
     """
-    Read data1.txt and data2.txt
+    Load packages from database files
+    Format:
+    ID|Name|Package|Description|Category
     """
 
     packages = []
@@ -29,37 +31,47 @@ def load_packages():
 
     for file in DATABASE_FILES:
 
-        if os.path.exists(file):
-
-            with open(
-                file,
-                "r",
-                encoding="utf-8"
-            ) as f:
-
-                for line in f:
-
-                    line = line.strip()
-
-                    if (
-                        line
-                        and not line.startswith("#")
-                    ):
-
-                        parts = line.split("|")
+        if not os.path.exists(file):
+            continue
 
 
-                        if len(parts) >= 4:
+        with open(
+            file,
+            "r",
+            encoding="utf-8"
+        ) as f:
 
-                            packages.append({
-                                "name": parts[0],
-                                "package": parts[1],
-                                "description": parts[2],
-                                "category": parts[3]
-                            })
+
+            for line in f:
+
+                line = line.strip()
+
+
+                if (
+                    not line
+                    or line.startswith("#")
+                ):
+                    continue
+
+
+                parts = line.split("|")
+
+
+                if len(parts) >= 5:
+
+                    packages.append(
+                        {
+                            "id": parts[0],
+                            "name": parts[1],
+                            "package": parts[2],
+                            "description": parts[3],
+                            "category": parts[4]
+                        }
+                    )
 
 
     return packages
+
 
 
 
@@ -72,16 +84,47 @@ def search_package(text):
 
     for item in packages:
 
-        if text.lower() in (
-            item["name"].lower()
-            + item["package"].lower()
-            + item["category"].lower()
-        ):
+        search_data = (
+            item["id"]
+            + item["name"]
+            + item["package"]
+            + item["description"]
+            + item["category"]
+        )
+
+
+        if text.lower() in search_data.lower():
 
             results.append(item)
 
 
     return results
+
+
+
+
+def get_categories():
+
+    packages = load_packages()
+
+    categories = {}
+
+
+    for item in packages:
+
+        category = item["category"]
+
+
+        if category not in categories:
+
+            categories[category] = []
+
+
+        categories[category].append(item)
+
+
+    return categories
+
 
 
 
@@ -92,48 +135,81 @@ def install_package(package):
     )
 
 
-    subprocess.run(
-        [
-            "pkg",
-            "install",
-            package,
-            "-y"
-        ]
-    )
+    try:
+
+        subprocess.run(
+            [
+                "pkg",
+                "install",
+                package,
+                "-y"
+            ],
+            check=True
+        )
+
+
+        print(
+            f"{package} installed successfully."
+        )
+
+
+    except subprocess.CalledProcessError:
+
+        print(
+            f"Failed installing {package}"
+        )
+
 
 
 
 def update_database():
 
     print(
-        "\nUpdating Dara Database...\n"
+        "\n==== Updating Dara Database ====\n"
     )
 
 
     for filename, url in DATABASE_URLS.items():
 
+
         try:
+
+            print(
+                f"Downloading {filename}..."
+            )
+
 
             urllib.request.urlretrieve(
                 url,
                 filename
             )
 
+
             print(
-                filename,
-                "updated"
+                f"{filename} updated."
             )
 
 
         except Exception as e:
 
+
             print(
-                filename,
-                "failed:",
-                e
+                f"{filename} update failed:"
             )
+
+            print(e)
+
 
 
     print(
-        "\nDatabase update finished."
+        "\nDatabase update complete."
     )
+
+
+
+
+def database_count():
+
+    packages = load_packages()
+
+    return len(packages)
