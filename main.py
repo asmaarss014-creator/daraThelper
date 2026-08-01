@@ -1,181 +1,205 @@
 from helper import (
-    load_categories,
     load_packages,
-    install_package,
     search_package,
+    install_package,
     update_database
 )
 
 
-def choose_packages(package_list):
-    """
-    Convert user input:
-    1
-    1,2,5
-    1-5
-    all
-    into package names
-    """
+def show_packages(packages):
+
+    print("\n==== Available Packages ====\n")
+
+    for i, item in enumerate(packages, 1):
+
+        print(
+            f"{i}. {item['name']}"
+        )
+
+        print(
+            f"   Package: {item['package']}"
+        )
+
+        print(
+            f"   Category: {item['category']}"
+        )
+
+        print(
+            f"   Info: {item['description']}"
+        )
+
+        print()
+
+
+
+def select_install(packages):
+
+    choice = input(
+        "\nSelect package number(s): "
+    ).strip()
+
 
     selected = []
 
-    choice = input("\nSelect package: ").strip().lower()
-
-    if choice == "all":
-        return package_list
-
 
     try:
-        # Multiple numbers
-        if "," in choice:
+
+        # Install all
+        if choice.lower() == "all":
+
+            selected = packages
+
+
+        # Multiple selection: 1,2,5
+        elif "," in choice:
+
             numbers = choice.split(",")
 
-            for n in numbers:
-                index = int(n.strip()) - 1
+            for number in numbers:
 
-                if 0 <= index < len(package_list):
-                    selected.append(package_list[index])
+                index = int(number) - 1
+
+                if 0 <= index < len(packages):
+                    selected.append(
+                        packages[index]
+                    )
 
 
-        # Range
+        # Range: 1-5
         elif "-" in choice:
+
             start, end = choice.split("-")
 
             start = int(start) - 1
             end = int(end)
 
-            selected = package_list[start:end]
+
+            selected = packages[start:end]
 
 
         # Single number
         else:
+
             index = int(choice) - 1
 
-            if 0 <= index < len(package_list):
-                selected.append(package_list[index])
+            if 0 <= index < len(packages):
+
+                selected.append(
+                    packages[index]
+                )
 
 
     except:
-        print("Invalid selection")
+
+        print(
+            "Invalid selection"
+        )
 
 
-    return selected
+    for item in selected:
+
+        install_package(
+            item["package"]
+        )
 
 
 
 def menu():
 
-    categories = load_categories()
-    packages = load_packages()
-
-
     while True:
 
-        print("\n==== Dara Termux Helper ====\n")
-
-        print("1. Categories")
-        print("2. All Commands")
-        print("3. Search")
-        print("4. Update Database")
-        print("0. Exit")
+        packages = load_packages()
 
 
-        choice = input("\nChoose: ")
+        print(
+            "\n====== Dara Termux Helper ======\n"
+        )
+
+
+        print(
+            "1. Show All Commands"
+        )
+
+        print(
+            "2. Search Package"
+        )
+
+        print(
+            "3. Update Database"
+        )
+
+        print(
+            "0. Exit"
+        )
+
+
+        choice = input(
+            "\nChoose: "
+        )
 
 
         if choice == "1":
 
-            for i, cat in enumerate(categories, 1):
-                print(f"{i}. {cat}")
+            show_packages(
+                packages
+            )
 
-
-            c = input("\nCategory: ")
-
-
-            try:
-
-                name = list(categories.keys())[int(c)-1]
-
-                category_packages = categories[name]
-
-
-                print("\nPackages:\n")
-
-                for i, pkg in enumerate(category_packages, 1):
-                    print(f"{i}. {pkg}")
-
-
-                selected = choose_packages(category_packages)
-
-
-                for pkg in selected:
-                    install_package(pkg)
-
-
-            except Exception:
-                print("Invalid category")
-
+            select_install(
+                packages
+            )
 
 
         elif choice == "2":
 
-            print("\nAll Commands:\n")
-
-            for i, pkg in enumerate(packages, 1):
-                print(f"{i}. {pkg}")
-
-
-            selected = choose_packages(packages)
+            text = input(
+                "Search: "
+            )
 
 
-            for pkg in selected:
-                install_package(pkg)
-
-
-
-        elif choice == "3":
-
-            text = input("Search: ")
-
-            results = search_package(text)
+            results = search_package(
+                text
+            )
 
 
             if results:
 
-                for i, r in enumerate(results, 1):
-                    print(f"{i}. {r}")
+                show_packages(
+                    results
+                )
 
-
-                selected = choose_packages(results)
-
-
-                for pkg in selected:
-                    install_package(pkg)
+                select_install(
+                    results
+                )
 
             else:
-                print("No package found")
+
+                print(
+                    "No package found"
+                )
 
 
-
-        elif choice == "4":
+        elif choice == "3":
 
             update_database()
-
-            packages = load_packages()
-
 
 
         elif choice == "0":
 
-            break
+            print(
+                "Goodbye!"
+            )
 
+            break
 
 
         else:
 
-            print("Invalid option")
+            print(
+                "Invalid option"
+            )
 
 
 
 if __name__ == "__main__":
+
     menu()
